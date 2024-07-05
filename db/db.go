@@ -1,5 +1,17 @@
 package db
 
-import "golang.org/x/tools/go/cfg"
+import (
+	"database/sql"
+	"log"
 
-func NewMySQLStorage(cfg mysql.Config) (*sql.DB, error)
+	"github.com/go-sql-driver/mysql"
+)
+
+func NewMySQLStorage(cfg mysql.Config) (*sql.DB, error) {
+  db, err := sql.Open("mysql", cfg.FormatDSN())
+  if err != nil {
+    log.Fatal(err)
+  }
+
+  return db, nil
+}
